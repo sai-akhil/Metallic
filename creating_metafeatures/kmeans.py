@@ -135,6 +135,8 @@ def get_validation_scores(data, labels):
     return scores
 def k_Means(d,ts):
     no_of_cluster=len(np.unique(ts))
+    if no_of_cluster ==1:
+        no_of_cluster=2
     scores=[]
     kmeans = KMeans(init='k-means++', n_clusters=no_of_cluster)
     kmeans.fit(d)

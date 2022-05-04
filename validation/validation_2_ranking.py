@@ -7,13 +7,14 @@ from os import path
 import csv
 import sklearn
 import krippendorff
-p = 'Metafeatures/kappa_score.csv'
-p1='Metafeatures/krippendorf.csv'
-p2='Metafeatures/precission.csv'
+import math
+p = "/Volumes/Education-Imp/UOttawa Master's/Final_Project/METALLIC/exp_validation/sample/kappa_score.csv"
+p1="/Volumes/Education-Imp/UOttawa Master's/Final_Project/METALLIC/exp_validation/sample/krippendorf.csv"
+p2="/Volumes/Education-Imp/UOttawa Master's/Final_Project/METALLIC/exp_validation/sample/precission.csv"
 l = path.exists(p)
 l1=path.exists(p1)
 l2=path.exists(p2)
-fields = ['Test_dataset', 'Classifier', 'F1', 'G-mean', 'Accuracy', 'Precision', 'Recall']
+fields = ['Test_dataset', 'Classifier', 'F1', 'G-mean', 'Accuracy', 'Precision', 'Recall','ROC_AUC','PR_AUC','Balanced_Accuracy','CWA']
 if l == True:
     os.remove(p)
 if l1 == True:
@@ -29,7 +30,7 @@ csvwriter2 = csv.writer(write_file2)
 csvwriter.writerow(fields)
 csvwriter1.writerow(fields)
 csvwriter2.writerow(fields)
-df = pd.read_csv('Metafeatures/features.csv')
+df = pd.read_csv("/Volumes/Education-Imp/UOttawa Master's/Final_Project/METALLIC/Metafeature/features.csv")
 dataset_names=list(df['Dataset'])
 names=np.unique(dataset_names)
 kapa_score=[]
@@ -37,16 +38,21 @@ krippen_score=[]
 precisson_5=[]
 for j in ['KNN','DT','GNB','SVM','RF']:
     for i in names:
+        print(i)
         kapa_score=[]
         krippen_score=[]
         precisson_5=[]
-        for metric in ['F1','G-mean','Accuracy','Precision','Recall']:
+        for metric in ['F1','G-mean','Accuracy','Precision','Recall','AUC-ROC','AUC-PR','BalancedAccuracy','CWA']:
             dataframe = df[df['Dataset'] != i]
             x_test_sample = df[df['Dataset'] == i]
             x_test_selected = x_test_sample[x_test_sample[j] == 1]
             y_test = np.array(x_test_selected[metric])
-            x_test = x_test_selected.iloc[:, 1:46]
-            x_test_sample=x_test.iloc[:,24:]
+            x_test = x_test_selected.iloc[:, 1:49]
+            x_test_sample=x_test.iloc[:,27:]
+            # print(dataframe.head(3))
+            # print(x_test_sample.head(3))
+            # print(x_test.head(3))
+            # print(x_test_sample.head(3))
             count1=1
             sample_not_present=[]
             for kk in range(0,21):
@@ -56,10 +62,14 @@ for j in ['KNN','DT','GNB','SVM','RF']:
                 count1=count1+1
             selected_dataframe = dataframe[dataframe[j] == 1]
             y_train = np.array(selected_dataframe[metric])
-            x_train = selected_dataframe.iloc[:, 1:46]
+            x_train = selected_dataframe.iloc[:, 1:49]
             model = xg.XGBRegressor(objective ='reg:squarederror',colsample_bytree=0.4, gamma=0, learning_rate=0.07, max_depth=3,
                                     min_child_weight=1.5,n_estimators=10000, reg_alpha=0.75, reg_lambda=0.45, subsample=0.6, seed=42)
             x_train = np.array(x_train)
+            # print("At iteration: ",i,j,metric)
+            # print("Xtrain:",x_train)
+            # print("ytrain:",y_train)
+            y_train[np.isnan(y_train)] = 0
             model.fit(np.array(x_train), y_train)
             y_pred = list(model.predict(np.array(x_test)))
             if len(y_pred) != 21:
@@ -86,6 +96,8 @@ for j in ['KNN','DT','GNB','SVM','RF']:
                     real_ranking.append(jj)
             print(real_ranking)
             print(pred_ranking)
+            real_ranking = [0 if math.isnan(x) else x for x in real_ranking]
+            pred_ranking = [0 if math.isnan(x) else x for x in pred_ranking]
             kapa_score.append(sklearn.metrics.cohen_kappa_score(np.array(real_ranking),np.array(pred_ranking)))
 
             reliability_data=[list(real_ranking),list(pred_ranking)]
@@ -104,16 +116,16 @@ for j in ['KNN','DT','GNB','SVM','RF']:
                 if rk in real_5:
                     count=count+1
             precisson_5.append(count/5)
-            data = {'Dataset':[i]*21,'Classifier':[j]*21,'Metric':[metric]*21,'predicted_score': list(y_pred[0]),'predicted_ranking': list(pred_ranking),'original_score': list(y_test[0]),'original_ranking':list(real_ranking)}
-            new_file=pd.DataFrame(data)
-            path='test_file_result/'+j+'_'+metric+'_'+i
-            new_file.to_csv(path,index=False)
-            data={}
+            # data = {'Dataset':[i]*21,'Classifier':[j]*21,'Metric':[metric]*21,'predicted_score': list(y_pred[0]),'predicted_ranking': list(pred_ranking),'original_score': list(y_test[0]),'original_ranking':list(real_ranking)}
+            # new_file=pd.DataFrame(data)
+            # path="/Volumes/Education-Imp/UOttawa Master's/Final_Project/METALLIC/exp_validation/test_file_result/"+j+'_'+metric+'_'+i
+            # new_file.to_csv(path,index=False)
+            # data={}
 
 
-        csvwriter.writerow([i, j, kapa_score[0], kapa_score[1], kapa_score[2], kapa_score[3], kapa_score[4]])
-        csvwriter1.writerow([i, j, krippen_score[0], krippen_score[1], krippen_score[2], krippen_score[3], krippen_score[4]])
-        csvwriter2.writerow([i, j, precisson_5[0], precisson_5[1], precisson_5[2], precisson_5[3], precisson_5[4]])
+        csvwriter.writerow([i, j, kapa_score[0], kapa_score[1], kapa_score[2], kapa_score[3], kapa_score[4], kapa_score[5], kapa_score[6], kapa_score[7], kapa_score[8]])
+        csvwriter1.writerow([i, j, krippen_score[0], krippen_score[1], krippen_score[2], krippen_score[3], krippen_score[4], krippen_score[5], krippen_score[6], krippen_score[7], krippen_score[8]])
+        csvwriter2.writerow([i, j, precisson_5[0], precisson_5[1], precisson_5[2], precisson_5[3], precisson_5[4],precisson_5[5], precisson_5[6], precisson_5[7], precisson_5[8]])
 write_file.close()
 write_file1.close()
 write_file2.close()

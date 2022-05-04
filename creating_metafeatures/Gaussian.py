@@ -1,7 +1,8 @@
 from sklearn.naive_bayes import GaussianNB
 import evaluation
 import time
-
+from sklearn.metrics import roc_curve
+from sklearn.metrics import roc_auc_score
 
 def Gaussian(X_train, y_train,X_test,y_test,state):
     a = time.time()
@@ -12,4 +13,7 @@ def Gaussian(X_train, y_train,X_test,y_test,state):
     y_pred = dt.predict(X_test)
     d = time.time()
     predict_time = (d - c)
-    return evaluation.evaluation(y_pred, y_test, state)
+
+    lr_probs = dt.predict_proba(X_test)
+    lr_probs = lr_probs[:, 1]
+    return evaluation.evaluation(y_pred, y_test, state, lr_probs, X_test)

@@ -31,8 +31,8 @@ def sample(i):
         21: 'SMOTETomek'
     }
     return switcher.get(i, "Invalid sampling method")
-df = pd.read_csv('Metafeatures/features_regression.csv') #features_regression.csv
-filename='ecoli1.csv'#input("enter the file name:")
+df = pd.read_csv("/Volumes/Education-Imp/UOttawa Master's/Final_Project/METALLIC/Metafeature/metafeatures.csv") #features_regression.csv
+filename="/Volumes/Education-Imp/UOttawa Master's/Final_Project/METALLIC/Dataset/BreastCancer.csv" #input("enter the file name:")
 metrics='F1'#input("enter the metrics to be considered:")
 print("select the Classifiers:")
 print("1.KNN")
