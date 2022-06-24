@@ -17,16 +17,16 @@ mse_reg = pd.read_csv("/Volumes/Education-Imp/UOttawa Master's/Final_Project/MET
 mse_dpl = pd.read_csv("/Volumes/Education-Imp/UOttawa Master's/Final_Project/METALLIC/exp_validation/sample/deep_mean_square_error.csv")
 
 
-# dpl_kap = dpl_kap.loc[reg_kap['Classifier'] == 'SVM']
-# dpl_krp = dpl_krp.loc[reg_krp['Classifier'] == 'SVM']
-# dpl_prec = dpl_prec.loc[reg_prec['Classifier'] == 'SVM']
+knn_kap = knn_kap.loc[knn_kap['Classifier'] == 'SVM']
+knn_krp = knn_krp.loc[knn_krp['Classifier'] == 'SVM']
+knn_prec = knn_prec.loc[knn_prec['Classifier'] == 'SVM']
 # mse_dpl = mse_dpl.loc[mse_dpl['Classifier'] == 'SVM']
 
     #for regression
 for i in ['F1','G-mean', 'Accuracy', 'Precision', 'Recall','ROC_AUC','PR_AUC','Balanced_Accuracy','CWA']:
     print("For :",i)
     # print("")
-    # print("Kappa scores")
+    print("Kappa scores")
     # # print("Regression")
     # # kap_reg = reg_kap[i]
     # # reg_kap_mean = kap_reg.mean()
@@ -35,16 +35,16 @@ for i in ['F1','G-mean', 'Accuracy', 'Precision', 'Recall','ROC_AUC','PR_AUC','B
     # # reg_kap_std = kap_reg.std()
     # # reg_kap_std = str(round(reg_kap_std, 3))
     # # print("Std Dev:",reg_kap_std)
-    # # print("")
-    # # print("KNN")
-    # # kap_knn = knn_kap[i]
-    # # reg_kap_mean = kap_knn.mean()
-    # # reg_kap_mean = str(round(reg_kap_mean, 3))
-    # # print("Mean:",reg_kap_mean)
-    # # reg_kap_std = kap_knn.std()
-    # # reg_kap_std = str(round(reg_kap_std, 3))
-    # # print("Std Dev:",reg_kap_std)
-    # print("")
+    print("")
+    print("KNN")
+    kap_knn = knn_kap[i]
+    reg_kap_mean = kap_knn.mean()
+    reg_kap_mean = str(round(reg_kap_mean, 3))
+    print("Mean:",reg_kap_mean)
+    reg_kap_std = kap_knn.std()
+    reg_kap_std = str(round(reg_kap_std, 3))
+    print("Std Dev:",reg_kap_std)
+    print("")
     # print("DNN")
     # kap_dpl = dpl_kap[i]
     # reg_kap_mean = kap_dpl.mean()
@@ -54,7 +54,7 @@ for i in ['F1','G-mean', 'Accuracy', 'Precision', 'Recall','ROC_AUC','PR_AUC','B
     # reg_kap_std = str(round(reg_kap_std, 3))
     # print("Std Dev:",reg_kap_std)
     # print("")
-    # print("Kripp scores")
+    print("Kripp scores")
     # # print("Regression")
     # # kap_reg = reg_krp[i]
     # # reg_kap_mean = kap_reg.mean()
@@ -63,16 +63,16 @@ for i in ['F1','G-mean', 'Accuracy', 'Precision', 'Recall','ROC_AUC','PR_AUC','B
     # # reg_kap_std = kap_reg.std()
     # # reg_kap_std = str(round(reg_kap_std, 3))
     # # print("Std Dev:",reg_kap_std)
-    # # print("")
-    # # print("KNN")
-    # # kap_knn = knn_krp[i]
-    # # reg_kap_mean = kap_knn.mean()
-    # # reg_kap_mean = str(round(reg_kap_mean, 3))
-    # # print("Mean:",reg_kap_mean)
-    # # reg_kap_std = kap_knn.std()
-    # # reg_kap_std = str(round(reg_kap_std, 3))
-    # # print("Std Dev:",reg_kap_std)
-    # print("")
+    print("")
+    print("KNN")
+    kap_knn = knn_krp[i]
+    reg_kap_mean = kap_knn.mean()
+    reg_kap_mean = str(round(reg_kap_mean, 3))
+    print("Mean:",reg_kap_mean)
+    reg_kap_std = kap_knn.std()
+    reg_kap_std = str(round(reg_kap_std, 3))
+    print("Std Dev:",reg_kap_std)
+    print("")
     # print("DNN")
     # kap_dpl = dpl_krp[i]
     # reg_kap_mean = kap_dpl.mean()
@@ -83,7 +83,7 @@ for i in ['F1','G-mean', 'Accuracy', 'Precision', 'Recall','ROC_AUC','PR_AUC','B
     # print("Std Dev:",reg_kap_std)
     # print("")
 
-    # print("Precisiion scores")
+    print("Precisiion scores")
     # # print("Regression")
     # # kap_reg = reg_prec[i]
     # # reg_kap_mean = kap_reg.mean()
@@ -92,16 +92,16 @@ for i in ['F1','G-mean', 'Accuracy', 'Precision', 'Recall','ROC_AUC','PR_AUC','B
     # # reg_kap_std = kap_reg.std()
     # # reg_kap_std = str(round(reg_kap_std, 3))
     # # print("Std Dev:",reg_kap_std)
-    # # print("")
-    # # print("KNN")
-    # # kap_knn = knn_prec[i]
-    # # reg_kap_mean = kap_knn.mean()
-    # # reg_kap_mean = str(round(reg_kap_mean, 3))
-    # # print("Mean:",reg_kap_mean)
-    # # reg_kap_std = kap_knn.std()
-    # # reg_kap_std = str(round(reg_kap_std, 3))
-    # # print("Std Dev:",reg_kap_std)
-    # print("")
+    print("")
+    print("KNN")
+    kap_knn = knn_prec[i]
+    reg_kap_mean = kap_knn.mean()
+    reg_kap_mean = str(round(reg_kap_mean, 3))
+    print("Mean:",reg_kap_mean)
+    reg_kap_std = kap_knn.std()
+    reg_kap_std = str(round(reg_kap_std, 3))
+    print("Std Dev:",reg_kap_std)
+    print("")
     # print("DNN")
     # kap_dpl = dpl_prec[i]
     # reg_kap_mean = kap_dpl.mean()
@@ -112,25 +112,25 @@ for i in ['F1','G-mean', 'Accuracy', 'Precision', 'Recall','ROC_AUC','PR_AUC','B
     # print("Std Dev:",reg_kap_std)
     # print("")
 
-    print("MSE Errors")
-    print("Regression")
-    kap_reg = mse_reg[i]
-    reg_kap_mean = kap_reg.mean()
-    reg_kap_mean = str(round(reg_kap_mean, 3))
-    print("Mean:",reg_kap_mean)
-    reg_kap_std = kap_reg.std()
-    reg_kap_std = str(round(reg_kap_std, 3))
-    print("Std Dev:",reg_kap_std)
-    print("")
-    print("DPL")
-    kap_knn = mse_dpl[i]
-    reg_kap_mean = kap_knn.mean()
-    reg_kap_mean = str(round(reg_kap_mean, 3))
-    print("Mean:",reg_kap_mean)
-    reg_kap_std = kap_knn.std()
-    reg_kap_std = str(round(reg_kap_std, 3))
-    print("Std Dev:",reg_kap_std)
-    print("")
+    # print("MSE Errors")
+    # print("Regression")
+    # kap_reg = mse_reg[i]
+    # reg_kap_mean = kap_reg.mean()
+    # reg_kap_mean = str(round(reg_kap_mean, 3))
+    # print("Mean:",reg_kap_mean)
+    # reg_kap_std = kap_reg.std()
+    # reg_kap_std = str(round(reg_kap_std, 3))
+    # print("Std Dev:",reg_kap_std)
+    # print("")
+    # print("DPL")
+    # kap_knn = mse_dpl[i]
+    # reg_kap_mean = kap_knn.mean()
+    # reg_kap_mean = str(round(reg_kap_mean, 3))
+    # print("Mean:",reg_kap_mean)
+    # reg_kap_std = kap_knn.std()
+    # reg_kap_std = str(round(reg_kap_std, 3))
+    # print("Std Dev:",reg_kap_std)
+    # print("")
     # reg_kap_mean = kap_reg.mean()
     # reg_kap_mean = str(round(reg_kap_mean, 3))
     # reg_f1_avg.append(reg_kap_mean)
